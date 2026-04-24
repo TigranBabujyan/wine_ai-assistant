@@ -13,6 +13,25 @@ import { LABEL_SCAN_SYSTEM_PROMPT } from '@/lib/prompts/label-scan'
 import { WineSearchResponseSchema } from '@/lib/validations/wine-search.schema'
 import { ScanResponseSchema } from '@/lib/validations/scan.schema'
 
+function serializeSseEvent(payload: unknown): string {
+  return `data: ${JSON.stringify(payload)}\n\n`
+}
+
+function toPublicAiError(error: unknown): string {
+  if (error instanceof Error && error.message) {
+    const message = error.message.toLowerCase()
+    if (message.includes('rate limit') || message.includes('429')) return 'AI provider rate limit reached. Please try again shortly.'
+    if (message.includes('unauthorized') || message.includes('invalid api key') || message.includes('401')) return 'AI provider rejected the API key. Please check Settings.'
+    if (message.includes('timeout') || message.includes('network')) return 'AI provider did not respond in time. Please try again.'
+  }
+
+  return 'AI request failed. Please try again.'
+}
+
+function logAiError(context: string, error: unknown) {
+  console.error(`[AI] ${context}:`, error instanceof Error ? error.message : error)
+}
+
 export function getModel(provider: AIProvider, pref: ModelPref | string): string {
   const config = PROVIDER_CONFIGS[provider]
   if (pref === 'fast' || pref === 'haiku') return config.models.fast
@@ -66,7 +85,7 @@ async function streamAnthropicSearch(
         for await (const event of stream) {
           if (event.type === 'content_block_delta' && event.delta.type === 'text_delta') {
             fullText += event.delta.text
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ chunk: event.delta.text })}\n\n`))
+            controller.enqueue(encoder.encode(serializeSseEvent({ chunk: event.delta.text })))
           }
           if (event.type === 'message_stop') {
             controller.enqueue(encoder.encode(buildDoneEvent(fullText)))
@@ -74,7 +93,8 @@ async function streamAnthropicSearch(
           }
         }
       } catch (err) {
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: String(err) })}\n\n`))
+        logAiError('Anthropic search stream failed', err)
+        controller.enqueue(encoder.encode(serializeSseEvent({ error: toPublicAiError(err) })))
         controller.close()
       }
     },
@@ -105,7 +125,7 @@ async function streamOpenAISearch(
           const text = chunk.choices[0]?.delta?.content ?? ''
           if (text) {
             fullText += text
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ chunk: text })}\n\n`))
+            controller.enqueue(encoder.encode(serializeSseEvent({ chunk: text })))
           }
           if (chunk.choices[0]?.finish_reason === 'stop') {
             controller.enqueue(encoder.encode(buildDoneEvent(fullText)))
@@ -113,26 +133,33 @@ async function streamOpenAISearch(
           }
         }
       } catch (err) {
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: String(err) })}\n\n`))
+        logAiError('OpenAI-compatible search stream failed', err)
+        controller.enqueue(encoder.encode(serializeSseEvent({ error: toPublicAiError(err) })))
         controller.close()
       }
     },
   })
 }
 
-function buildDoneEvent(fullText: string): string {
+export function buildDoneEvent(fullText: string): string {
+  if (!fullText.trim()) {
+    return serializeSseEvent({ error: 'AI returned an empty response' })
+  }
+
   try {
-    const parsed = WineSearchResponseSchema.safeParse(parseClaudeJson(fullText))
+    const parsedJson = parseClaudeJson(fullText)
+    const parsed = WineSearchResponseSchema.safeParse(parsedJson)
     if (parsed.success) {
-      return `data: ${JSON.stringify({ done: true, result: parsed.data })}\n\n`
+      return serializeSseEvent({ done: true, result: parsed.data })
     }
+
     console.error('Schema validation failed:', parsed.error.issues)
     console.error('Raw AI response:', fullText.slice(0, 500))
-    return `data: ${JSON.stringify({ error: 'AI returned unexpected format' })}\n\n`
+    return serializeSseEvent({ error: 'AI returned an unexpected response format' })
   } catch (err) {
-    console.error('JSON parse failed:', err)
+    logAiError('JSON parse failed', err)
     console.error('Raw AI response:', fullText.slice(0, 500))
-    return `data: ${JSON.stringify({ error: 'Failed to parse AI response' })}\n\n`
+    return serializeSseEvent({ error: 'Failed to parse AI response' })
   }
 }
 
