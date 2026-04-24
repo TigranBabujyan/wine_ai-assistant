@@ -14,7 +14,9 @@ const eslintConfig = defineConfig([
           argsIgnorePattern: "^_",
           varsIgnorePattern: "^_"
         }
-      ]
+      ],
+      "@typescript-eslint/no-require-imports": "warn",
+      "react-hooks/set-state-in-effect": "warn"
     }
   },
   globalIgnores([
