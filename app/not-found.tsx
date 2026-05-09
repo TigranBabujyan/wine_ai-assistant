@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Wine } from 'lucide-react'
 
 export default function NotFound() {
@@ -14,8 +14,8 @@ export default function NotFound() {
         This page doesn&apos;t exist. Perhaps try searching for a wine instead?
       </p>
       <div className="flex gap-3">
-        <Link href="/"><Button variant="outline">Go Home</Button></Link>
-        <Link href="/search"><Button>Search Wines</Button></Link>
+        <Link href="/" className={buttonVariants({ variant: 'outline' })}>Go Home</Link>
+        <Link href="/search" className={buttonVariants()}>Search Wines</Link>
       </div>
     </div>
   )

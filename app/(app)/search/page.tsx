@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, Suspense } from 'react'
+import { useEffect, Suspense, useState, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { SearchBar } from '@/components/features/search/SearchBar'
 import { StreamingThought } from '@/components/features/search/StreamingThought'
@@ -39,20 +39,45 @@ const styleDot: Record<WineStyle | string, string> = {
   red: '#8B2252', white: '#C9A84C', 'rosé': '#EC4899', sparkling: '#8B5CF6', dessert: '#C9A84C',
 }
 
+const MAX_QUERY = 300
+
 function SearchPageInner() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const { search, searchResults, searchQuery, searchLoading, searchError, streamBuffer } = useWineSearch()
   const { saveWine } = useJournal()
-
   const qParam = searchParams.get('q')
+  const [inputValue, setInputValue] = useState(qParam ?? '')
+  const [rateLimitCountdown, setRateLimitCountdown] = useState(0)
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const isRateLimit = !!searchError?.toLowerCase().includes('rate limit')
+
   useEffect(() => {
-    if (qParam) search(qParam)
+    if (isRateLimit) {
+      setRateLimitCountdown(30)
+      countdownRef.current = setInterval(() => {
+        setRateLimitCountdown(prev => {
+          if (prev <= 1) { clearInterval(countdownRef.current!); return 0 }
+          return prev - 1
+        })
+      }, 1000)
+    }
+    return () => { if (countdownRef.current) clearInterval(countdownRef.current) }
+  }, [isRateLimit, searchError])
+
+  useEffect(() => {
+    if (qParam) {
+      setInputValue(qParam)
+      search(qParam)
+    }
   }, [qParam]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSearch = (query: string) => {
-    router.push(`/search?q=${encodeURIComponent(query)}`, { scroll: false })
-    search(query)
+    const trimmed = query.trim()
+    if (trimmed.length < 2 || trimmed.length > MAX_QUERY) return
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`, { scroll: false })
+    search(trimmed)
   }
 
   const handleSave = async (wine: WinePartial) => {
@@ -89,15 +114,22 @@ function SearchPageInner() {
             <Sparkles className={`absolute left-5 w-5 h-5 z-10 transition-all duration-300 ${searchLoading ? 'animate-pulse-glow' : ''}`} style={{ color: 'var(--wine-400)' }} />
             <input
               type="text"
-              defaultValue={qParam ?? ''}
-              key={qParam ?? 'empty'}
+              value={inputValue}
               placeholder="Describe a wine... bold red for steak, light Italian white..."
               className="w-full bg-transparent pl-14 pr-36 py-5 text-base text-white placeholder:text-white/25 outline-none"
-              onKeyDown={e => e.key === 'Enter' && handleSearch((e.target as HTMLInputElement).value)}
+              maxLength={MAX_QUERY}
+              onChange={e => setInputValue(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && handleSearch(inputValue)}
             />
+            {inputValue.length > 200 && (
+              <span className="absolute right-28 text-xs tabular-nums"
+                style={{ color: inputValue.length >= MAX_QUERY ? '#ef4444' : 'rgba(255,255,255,0.3)' }}>
+                {inputValue.length}/{MAX_QUERY}
+              </span>
+            )}
             <button
-              onClick={e => handleSearch((e.currentTarget.closest('.relative')!.querySelector('input') as HTMLInputElement).value)}
-              disabled={searchLoading}
+              onClick={() => handleSearch(inputValue)}
+              disabled={searchLoading || inputValue.trim().length < 2 || inputValue.length > MAX_QUERY}
               className="absolute right-2 px-7 py-3 rounded-full text-white font-medium text-sm transition-all disabled:opacity-50"
               style={{ background: 'linear-gradient(to right, var(--wine-600), var(--wine-800))', boxShadow: '0 0 20px rgba(139,34,82,0.3)' }}
             >
@@ -115,7 +147,7 @@ function SearchPageInner() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + i * 0.08 }}
-                onClick={() => handleSearch(q)}
+                onClick={() => { setInputValue(q); handleSearch(q) }}
                 className="px-4 py-2 rounded-full text-sm glass-card hover:bg-white/[0.08] text-white/50 hover:text-white transition-all duration-300"
               >
                 {q}
@@ -139,7 +171,12 @@ function SearchPageInner() {
       {searchError && !searchLoading && (
         <div className="flex items-center gap-3 p-4 rounded-2xl text-red-400" style={{ background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.2)' }}>
           <AlertCircle className="w-5 h-5 shrink-0" />
-          <p className="text-sm">{searchError}</p>
+          <div className="flex-1">
+            <p className="text-sm">{isRateLimit ? 'AI is busy right now. Please wait a moment.' : searchError}</p>
+            {isRateLimit && rateLimitCountdown > 0 && (
+              <p className="text-xs mt-1 text-red-400/60">Retry in {rateLimitCountdown}s</p>
+            )}
+          </div>
         </div>
       )}
 

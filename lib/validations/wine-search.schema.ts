@@ -52,5 +52,5 @@ export const WineSearchResponseSchema = z.object({
 })
 
 export const SearchRequestSchema = z.object({
-  query: z.string().min(2).max(500),
+  query: z.string().min(2).max(300),
 })

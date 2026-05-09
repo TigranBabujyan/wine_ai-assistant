@@ -101,9 +101,11 @@ Typical variables:
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-ENCRYPTION_SECRET=your_encryption_secret
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+DB_ENCRYPTION_SECRET=your_encryption_secret
+ANTHROPIC_API_KEY=
 ```
+
+`ANTHROPIC_API_KEY` is optional and only used for the unauthenticated landing-page demo if you enable that flow.
 
 Never commit real API keys or secrets.
 

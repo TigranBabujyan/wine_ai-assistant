@@ -4,7 +4,6 @@ import { scanLabel } from '@/lib/api/ai-provider'
 import { parseClaudeJson } from '@/lib/api/claude'
 import { ScanRequestSchema, ScanResponseSchema } from '@/lib/validations/scan.schema'
 import { checkRateLimit } from '@/lib/utils/rate-limit'
-import { AIProvider } from '@/types/ai.types'
 
 const MAX_BASE64_LENGTH = 7 * 1024 * 1024
 
@@ -25,39 +24,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Image too large. Please use an image under 5MB.' }, { status: 413 })
     }
 
-    // Get selected provider
-    const { data: prefs } = await supabase
-      .from('user_preferences')
-      .select('selected_provider')
-      .eq('user_id', user.id)
-      .single()
-
-    const provider: AIProvider = (prefs?.selected_provider as AIProvider) ?? 'anthropic'
-
-    const { data: keyRecord } = await supabase
-      .from('api_keys')
-      .select('key_encrypted')
-      .eq('user_id', user.id)
-      .eq('provider', provider)
-      .eq('is_active', true)
-      .single()
-
-    if (!keyRecord) {
-      const providerLabel = provider === 'openai' ? 'OpenAI' : 'Anthropic'
-      return NextResponse.json(
-        { error: `No ${providerLabel} API key found. Please add it in Settings.` },
-        { status: 422 }
-      )
+    const apiKey = process.env.GROQ_API_KEY
+    if (!apiKey) {
+      return NextResponse.json({ error: 'AI service is not configured' }, { status: 503 })
     }
 
-    const { data: apiKey } = await supabase.rpc('decrypt_api_key', {
-      encrypted_key: keyRecord.key_encrypted,
-      p_secret:      process.env.DB_ENCRYPTION_SECRET ?? '',
-    })
-    if (!apiKey) return NextResponse.json({ error: 'Failed to retrieve API key' }, { status: 500 })
-
     const { text, tokensUsed, model } = await scanLabel(
-      provider,
+      'groq',
       apiKey,
       parsed.data.image,
       parsed.data.mimeType

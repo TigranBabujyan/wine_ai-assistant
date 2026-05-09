@@ -20,6 +20,16 @@ describe('SearchRequestSchema', () => {
 
     expect(result.success).toBe(false)
   })
+
+  it('accepts a query at exactly the 300-char limit', () => {
+    const result = SearchRequestSchema.safeParse({ query: 'a'.repeat(300) })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects a query over 300 chars', () => {
+    const result = SearchRequestSchema.safeParse({ query: 'a'.repeat(301) })
+    expect(result.success).toBe(false)
+  })
 })
 
 describe('WineSearchResponseSchema', () => {

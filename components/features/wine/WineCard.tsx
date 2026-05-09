@@ -4,6 +4,7 @@ import { WineFull, WinePartial, WineStyle } from '@/types/wine.types'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Skeleton } from '@/components/ui/skeleton'
 import { BookmarkPlus, Star, ChevronRight, Shield, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -150,11 +151,12 @@ export function WineCard({ wine, variant = 'search', onSave, onDelete, isLoading
           )}
           {variant === 'journal' && isFull && (
             <>
-              <Link href={`/wine/${(wine as WineFull).id}`} className="flex-1">
-                <Button size="sm" variant="outline" className="w-full text-xs gap-1.5">
-                  View Details
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </Button>
+              <Link
+                href={`/wine/${(wine as WineFull).id}`}
+                className={cn(buttonVariants({ size: 'sm', variant: 'outline' }), 'flex-1 w-full text-xs gap-1.5')}
+              >
+                View Details
+                <ChevronRight className="w-3.5 h-3.5" />
               </Link>
               {onDelete && (
                 <Button

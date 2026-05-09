@@ -1,9 +1,10 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/api/supabase-server'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Badge } from '@/components/ui/badge'
 import { Wine, Search, Camera, BookOpen, Trophy, ArrowRight, Sparkles, Shield, Star, Check } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export default async function LandingPage() {
   const supabase = await createClient()
@@ -20,11 +21,11 @@ export default async function LandingPage() {
           <span className="font-bold text-lg">Wine AI</span>
         </Link>
         <div className="flex items-center gap-3">
-          <Link href="/auth">
-            <Button variant="ghost" size="sm">Sign In</Button>
+          <Link href="/auth" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
+            Sign In
           </Link>
-          <Link href="/auth">
-            <Button size="sm" className="hidden sm:flex">Get Started Free</Button>
+          <Link href="/auth" className={cn(buttonVariants({ size: 'sm' }), 'hidden sm:flex')}>
+            Get Started Free
           </Link>
         </div>
       </nav>
@@ -51,15 +52,17 @@ export default async function LandingPage() {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-12">
-            <Link href="/auth">
-              <Button size="lg" className="gap-2 px-8 h-12 text-base shadow-lg shadow-primary/20">
-                Start for Free <ArrowRight className="w-4 h-4" />
-              </Button>
+            <Link
+              href="/auth"
+              className={cn(buttonVariants({ size: 'lg' }), 'gap-2 px-8 h-12 text-base shadow-lg shadow-primary/20')}
+            >
+              Start for Free <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="/auth">
-              <Button size="lg" variant="outline" className="gap-2 px-8 h-12 text-base">
-                <Camera className="w-4 h-4" /> Scan a Label
-              </Button>
+            <Link
+              href="/auth"
+              className={cn(buttonVariants({ size: 'lg', variant: 'outline' }), 'gap-2 px-8 h-12 text-base')}
+            >
+              <Camera className="w-4 h-4" /> Scan a Label
             </Link>
           </div>
 
@@ -179,10 +182,8 @@ export default async function LandingPage() {
             <p className="text-muted-foreground leading-relaxed mb-6">
               Earn achievements as you explore the world of wine. From your first saved bottle to becoming a World Traveler by sampling wines from three continents.
             </p>
-            <Link href="/auth">
-              <Button className="gap-2">
-                Start earning <Trophy className="w-4 h-4" />
-              </Button>
+            <Link href="/auth" className={cn(buttonVariants(), 'gap-2')}>
+              Start earning <Trophy className="w-4 h-4" />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-3">
@@ -231,10 +232,11 @@ export default async function LandingPage() {
           <p className="text-primary-foreground/70 mb-8">
             Free to use. Bring your own AI API key. No subscription.
           </p>
-          <Link href="/auth">
-            <Button size="lg" variant="secondary" className="gap-2 h-12 px-8">
-              Get Started Free <ArrowRight className="w-4 h-4" />
-            </Button>
+          <Link
+            href="/auth"
+            className={cn(buttonVariants({ size: 'lg', variant: 'secondary' }), 'gap-2 h-12 px-8')}
+          >
+            Get Started Free <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
@@ -246,8 +248,9 @@ export default async function LandingPage() {
             <Wine className="w-4 h-4 text-primary" />
             <span className="font-medium text-foreground">Wine AI Assistant</span>
           </div>
-          <p>Built with Next.js, Supabase, and AI. A portfolio project.</p>
+          <p>© 2025 Wine AI · Built with Next.js, Supabase, and AI</p>
           <div className="flex gap-4">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             <Link href="/auth" className="hover:text-foreground transition-colors">Sign In</Link>
             <Link href="/auth" className="hover:text-foreground transition-colors">Sign Up</Link>
           </div>

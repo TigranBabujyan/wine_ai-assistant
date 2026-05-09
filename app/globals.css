@@ -157,6 +157,12 @@
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
 }
+@keyframes progress-bar {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(-10%); }
+  100% { transform: translateX(0%); }
+}
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
 .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-progress-bar { animation: progress-bar 2.5s ease-out forwards; width: 100%; }

@@ -18,25 +18,44 @@ export default async function AchievementsPage() {
 
   const allTypes = Object.keys(ACHIEVEMENT_DEFINITIONS) as AchievementType[]
   const unlockedCount = unlockedMap.size
+  const pct = Math.round((unlockedCount / allTypes.length) * 100)
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Trophy className="w-6 h-6 text-primary" />
-          Achievements
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          {unlockedCount} of {allTypes.length} achievements unlocked
-        </p>
+    <div className="max-w-6xl mx-auto space-y-8">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-4xl md:text-5xl font-medium text-gradient mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+            Achievements
+          </h1>
+          <div className="h-px w-24" style={{ background: 'linear-gradient(to right, var(--wine-500), transparent)' }} />
+        </div>
+        <div className="flex items-center gap-3">
+          <Trophy className="w-5 h-5" style={{ color: '#C9A84C' }} />
+          <span className="text-sm font-medium" style={{ color: 'var(--wine-400)' }}>
+            {unlockedCount} of {allTypes.length} unlocked
+          </span>
+        </div>
       </div>
 
       {/* Progress bar */}
-      <div className="h-2 bg-muted rounded-full overflow-hidden">
-        <div
-          className="h-full bg-primary rounded-full transition-all duration-500"
-          style={{ width: `${(unlockedCount / allTypes.length) * 100}%` }}
-        />
+      <div className="glass-card rounded-2xl p-5 space-y-3">
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-white/40">Collection progress</span>
+          <span className="font-medium tabular-nums" style={{ color: '#C9A84C' }}>{pct}%</span>
+        </div>
+        <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+          <div
+            className="h-full rounded-full transition-all duration-700"
+            style={{
+              width: `${pct}%`,
+              background: 'linear-gradient(to right, #8B2252, #C9A84C)',
+            }}
+          />
+        </div>
+        {unlockedCount === 0 && (
+          <p className="text-xs text-white/30">Save your first wine to start earning achievements.</p>
+        )}
       </div>
 
       {/* Achievement grid */}
