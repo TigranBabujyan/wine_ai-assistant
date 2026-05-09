@@ -35,22 +35,22 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 ## Phase 2 — Polish (2–3 days)
 
 ### 5. Loading animations
-- [ ] Search: skeleton card grid appears immediately while SSE streams
-- [ ] Scan: full-card skeleton with "Analyzing label..." spinner — starts on image selection
-- [ ] Both: subtle top progress bar during any AI request
+- [x] Search: skeleton card grid appears immediately while SSE streams — was already implemented
+- [x] Scan: full-card skeleton with "Analyzing label..." spinner — was already implemented
+- [x] Both: subtle top progress bar during any AI request — `TopLoadingBar` added to AppShell
 
 ### 6. Groq rate limit error handling
-- [ ] Detect 429 from Groq in both routes
-- [ ] Return user-friendly message: "AI is busy, try again in 30 seconds"
-- [ ] Show countdown timer in UI when rate limited
+- [x] Detect 429 from Groq — already handled in `toPublicAiError`
+- [x] Return user-friendly message: "AI is busy right now. Please wait a moment."
+- [x] Show countdown timer in UI (30s) when rate limited on search
 
 ### 7. Mobile camera access
-- [ ] Add `capture="environment"` to scan file input so mobile opens camera directly
+- [x] `capture="environment"` already present on scan file input — confirmed done
 
 ### 8. Empty states
-- [ ] Journal with no saved wines — friendly empty state with CTA to search
-- [ ] Search with no results — friendly message, not blank space
-- [ ] Achievements page with 0 unlocked — motivational empty state
+- [x] Journal with no saved wines — already had a great empty state
+- [x] Search with no results — already had "Your sommelier awaits"
+- [x] Achievements page with 0 unlocked — motivational hint added to progress card
 
 ---
 
@@ -99,4 +99,5 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 | 2026-05-09 | Plan created. App is at ~85% — build passes clean, env vars set, not yet deployed. |
 | 2026-05-09 | Phase 1 partial: Groq server-side key wired up, BYOK removed from both API routes. Dashboard setup accordion removed. Settings page simplified to account-only. Footer "portfolio project" text removed. Search query limit lowered to 300 chars with live counter + button guard. Scan "Claude" text updated. Build clean, 11/11 tests pass. |
 | 2026-05-09 | Phase 1 complete: Auto-scan on file select (no "Scan Label" button click needed). Image compression was already implemented. All Phase 1 items done. Build clean. |
+| 2026-05-09 | Phase 2 complete: TopLoadingBar added to AppShell (wine+gold gradient, fires on search/scan). 429 countdown in search UI. Achievements page and AchievementBadge restyled to dark glass aesthetic. All other Phase 2 items were already implemented. Build clean, 11/11 tests pass. |
 

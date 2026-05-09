@@ -1,7 +1,6 @@
 'use client'
 
 import { AchievementDefinition } from '@/types/achievement.types'
-import { cn } from '@/lib/utils'
 
 interface AchievementBadgeProps {
   definition: AchievementDefinition
@@ -12,41 +11,56 @@ interface AchievementBadgeProps {
 export function AchievementBadge({ definition, unlocked, unlockedAt }: AchievementBadgeProps) {
   return (
     <div
-      className={cn(
-        'relative flex flex-col items-center text-center p-4 rounded-xl border transition-all',
-        unlocked
-          ? 'bg-card border-primary/30 shadow-sm'
-          : 'bg-muted/50 border-border opacity-60 grayscale'
-      )}
+      className="relative flex flex-col items-center text-center p-5 rounded-2xl transition-all duration-300"
+      style={unlocked ? {
+        background: 'rgba(139,34,82,0.12)',
+        border: '1px solid rgba(139,34,82,0.25)',
+        boxShadow: '0 0 30px rgba(139,34,82,0.08)',
+      } : {
+        background: 'rgba(255,255,255,0.02)',
+        border: '1px solid rgba(255,255,255,0.05)',
+        opacity: 0.5,
+        filter: 'grayscale(0.6)',
+      }}
     >
       {/* Icon */}
-      <div className={cn(
-        'w-14 h-14 rounded-full flex items-center justify-center text-2xl mb-3 transition-all',
-        unlocked ? 'bg-primary/10 ring-2 ring-primary/20' : 'bg-muted'
-      )}>
+      <div
+        className="w-14 h-14 rounded-full flex items-center justify-center text-2xl mb-3"
+        style={unlocked ? {
+          background: 'rgba(139,34,82,0.2)',
+          boxShadow: '0 0 20px rgba(139,34,82,0.2)',
+        } : {
+          background: 'rgba(255,255,255,0.04)',
+        }}
+      >
         {definition.icon}
       </div>
 
       {/* Name */}
-      <h3 className={cn('font-semibold text-sm mb-1', !unlocked && 'text-muted-foreground')}>
+      <h3
+        className="font-medium text-sm mb-1"
+        style={{ color: unlocked ? '#F5F0E8' : 'rgba(255,255,255,0.4)', fontFamily: 'Playfair Display, serif' }}
+      >
         {definition.name}
       </h3>
 
       {/* Description */}
-      <p className="text-xs text-muted-foreground leading-relaxed">
+      <p className="text-xs leading-relaxed" style={{ color: 'rgba(255,255,255,0.35)' }}>
         {definition.description}
       </p>
 
       {/* Unlock date */}
       {unlocked && unlockedAt && (
-        <p className="text-xs text-primary mt-2 font-medium">
+        <p className="text-xs font-medium mt-2" style={{ color: '#C9A84C' }}>
           {new Date(unlockedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
         </p>
       )}
 
-      {/* Lock indicator */}
+      {/* Lock requirement */}
       {!unlocked && (
-        <p className="text-xs text-muted-foreground mt-2 italic">{definition.requirement}</p>
+        <p className="text-xs mt-2 italic" style={{ color: 'rgba(255,255,255,0.2)' }}>
+          {definition.requirement}
+        </p>
       )}
     </div>
   )

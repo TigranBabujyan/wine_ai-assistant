@@ -3,10 +3,12 @@
 import { Sidebar } from './Sidebar'
 import { MobileNav } from './MobileNav'
 import { Toaster } from '@/components/ui/sonner'
+import { TopLoadingBar } from '@/components/ui/TopLoadingBar'
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen overflow-hidden" style={{ background: '#0A0A0F' }}>
+      <TopLoadingBar />
       {/* Animated background blobs */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div

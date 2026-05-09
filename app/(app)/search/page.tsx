@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, Suspense, useState } from 'react'
+import { useEffect, Suspense, useState, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { SearchBar } from '@/components/features/search/SearchBar'
 import { StreamingThought } from '@/components/features/search/StreamingThought'
@@ -48,6 +48,23 @@ function SearchPageInner() {
   const { saveWine } = useJournal()
   const qParam = searchParams.get('q')
   const [inputValue, setInputValue] = useState(qParam ?? '')
+  const [rateLimitCountdown, setRateLimitCountdown] = useState(0)
+  const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const isRateLimit = !!searchError?.toLowerCase().includes('rate limit')
+
+  useEffect(() => {
+    if (isRateLimit) {
+      setRateLimitCountdown(30)
+      countdownRef.current = setInterval(() => {
+        setRateLimitCountdown(prev => {
+          if (prev <= 1) { clearInterval(countdownRef.current!); return 0 }
+          return prev - 1
+        })
+      }, 1000)
+    }
+    return () => { if (countdownRef.current) clearInterval(countdownRef.current) }
+  }, [isRateLimit, searchError])
 
   useEffect(() => {
     if (qParam) {
@@ -154,7 +171,12 @@ function SearchPageInner() {
       {searchError && !searchLoading && (
         <div className="flex items-center gap-3 p-4 rounded-2xl text-red-400" style={{ background: 'rgba(220,38,38,0.1)', border: '1px solid rgba(220,38,38,0.2)' }}>
           <AlertCircle className="w-5 h-5 shrink-0" />
-          <p className="text-sm">{searchError}</p>
+          <div className="flex-1">
+            <p className="text-sm">{isRateLimit ? 'AI is busy right now. Please wait a moment.' : searchError}</p>
+            {isRateLimit && rateLimitCountdown > 0 && (
+              <p className="text-xs mt-1 text-red-400/60">Retry in {rateLimitCountdown}s</p>
+            )}
+          </div>
         </div>
       )}
 
