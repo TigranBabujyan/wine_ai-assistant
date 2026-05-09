@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useCallback } from 'react'
+import Image from 'next/image'
 import { useLabelScan } from '@/lib/hooks/useLabelScan'
 import { Button } from '@/components/ui/button'
 import { WineCard } from '@/components/features/wine/WineCard'
@@ -86,7 +87,7 @@ export function LabelScanner() {
     return (
       <div className="space-y-4">
         <div className="relative rounded-xl overflow-hidden bg-muted max-h-80 flex items-center justify-center">
-          <img src={previewUrl} alt="Wine label preview" className="max-h-80 object-contain w-full" />
+          <Image src={previewUrl} alt="Wine label preview" width={800} height={600} className="max-h-80 object-contain w-full" unoptimized />
         </div>
         <div className="flex gap-3">
           <Button variant="outline" onClick={reset} className="flex-1">
@@ -105,7 +106,7 @@ export function LabelScanner() {
     return (
       <div className="space-y-4">
         <div className="relative rounded-xl overflow-hidden bg-muted max-h-80 flex items-center justify-center">
-          {previewUrl && <img src={previewUrl} alt="Scanning..." className="max-h-80 object-contain w-full opacity-60" />}
+          {previewUrl && <Image src={previewUrl} alt="Scanning..." width={800} height={600} className="max-h-80 object-contain w-full opacity-60" unoptimized />}
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/70 backdrop-blur-sm">
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 animate-pulse">
               <Loader2 className="w-8 h-8 text-primary animate-spin" />

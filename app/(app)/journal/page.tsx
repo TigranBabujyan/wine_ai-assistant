@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useJournal } from '@/lib/hooks/useJournal'
-import { BookOpen, Search, Wine, ArrowRight, Trash2 } from 'lucide-react'
+import { Search, Wine, ArrowRight, Trash2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Link from 'next/link'

@@ -28,6 +28,7 @@ export function MobileNav() {
   const [open, setOpen] = useState(false)
 
   // Close drawer on route change
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setOpen(false) }, [pathname])
 
   // Prevent body scroll when open
