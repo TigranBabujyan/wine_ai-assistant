@@ -41,9 +41,25 @@ export default function AuthPage() {
     setError(null)
     setLoading(true)
     const form = new FormData(e.currentTarget)
+    const email = form.get('email') as string
+
+    // Check if email is already registered before calling signUp
+    // (Supabase silently succeeds on duplicate emails when confirmation is on)
+    const check = await fetch('/api/auth/check-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+    const { exists } = await check.json()
+    if (exists) {
+      setError('An account with this email already exists. Please sign in instead.')
+      setLoading(false)
+      return
+    }
+
     const supabase = createClient()
     const { error } = await supabase.auth.signUp({
-      email: form.get('email') as string,
+      email,
       password: form.get('password') as string,
       options: {
         data: { name: form.get('name') as string },
