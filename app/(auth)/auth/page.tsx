@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Wine, Loader2, AlertCircle } from 'lucide-react'
+import { Loader2, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function AuthPage() {
   const router = useRouter()
@@ -61,9 +62,7 @@ export default function AuthPage() {
     <div className="w-full max-w-sm space-y-6">
       {/* Logo — mobile only (desktop shows in layout panel) */}
       <Link href="/" className="flex items-center gap-2.5 justify-center lg:hidden">
-        <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-          <Wine className="w-5 h-5 text-primary-foreground" />
-        </div>
+        <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
         <span className="font-bold text-xl">Wine AI</span>
       </Link>
 

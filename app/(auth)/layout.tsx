@@ -1,4 +1,5 @@
-import { Wine, Search, Camera, BookOpen } from 'lucide-react'
+import { Search, Camera, BookOpen } from 'lucide-react'
+import Image from 'next/image'
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -6,9 +7,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* Left: visual panel (desktop only) */}
       <div className="hidden lg:flex flex-col justify-between bg-primary p-12">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-primary-foreground/20 flex items-center justify-center">
-            <Wine className="w-5 h-5 text-primary-foreground" />
-          </div>
+          <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
           <span className="font-bold text-xl text-primary-foreground">Wine AI</span>
         </div>
 
@@ -39,7 +38,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <p className="text-primary-foreground/40 text-xs">
-          Portfolio project · Built with Next.js & Claude AI
+          © 2025 Wine AI · Built with Next.js and AI
         </p>
       </div>
 
