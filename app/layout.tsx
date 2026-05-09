@@ -22,11 +22,13 @@ export const metadata: Metadata = {
     description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal.',
     type: 'website',
     locale: 'en_US',
+    images: [{ url: '/logo.svg', width: 1200, height: 1200, alt: 'Wine AI Logo' }],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
     title: 'Wine AI — Your Personal AI Sommelier',
     description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal.',
+    images: ['/logo.svg'],
   },
   robots: { index: true, follow: true },
 }

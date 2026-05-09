@@ -11,7 +11,6 @@ import { AIProvider, ModelPref, PROVIDER_CONFIGS } from '@/types/ai.types'
 import { WINE_SEARCH_SYSTEM_PROMPT, buildSearchUserMessage } from '@/lib/prompts/wine-search'
 import { LABEL_SCAN_SYSTEM_PROMPT } from '@/lib/prompts/label-scan'
 import { WineSearchResponseSchema } from '@/lib/validations/wine-search.schema'
-import { ScanResponseSchema } from '@/lib/validations/scan.schema'
 
 function serializeSseEvent(payload: unknown): string {
   return `data: ${JSON.stringify(payload)}\n\n`

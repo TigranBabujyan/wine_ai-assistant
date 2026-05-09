@@ -1,0 +1,84 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AI Wine Assistant Icon Logo</title>
+  <desc id="desc">Premium minimalist icon combining a wine glass, neural network nodes, grape cluster, and AI sparkle without text.</desc>
+
+  <defs>
+    <linearGradient id="wineGradient" x1="360" y1="130" x2="850" y2="980" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#D8B66A"/>
+      <stop offset="0.36" stop-color="#8B1739"/>
+      <stop offset="1" stop-color="#27101A"/>
+    </linearGradient>
+
+    <linearGradient id="goldGradient" x1="300" y1="145" x2="910" y2="900" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F6D98F"/>
+      <stop offset="1" stop-color="#A77A2E"/>
+    </linearGradient>
+
+    <radialGradient id="backgroundGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 590) rotate(90) scale(500)">
+      <stop offset="0" stop-color="#9B1B42" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#9B1B42" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="softShadow" x="190" y="120" width="820" height="940" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#180810" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Premium warm background -->
+  <rect width="1200" height="1200" rx="280" fill="#FFF8EF"/>
+  <circle cx="600" cy="600" r="492" fill="url(#backgroundGlow)"/>
+
+  <!-- Elegant badge frame -->
+  <circle cx="600" cy="600" r="430" stroke="url(#goldGradient)" stroke-width="18"/>
+  <circle cx="600" cy="600" r="386" stroke="#7A1230" stroke-opacity="0.16" stroke-width="5"/>
+
+  <!-- Wine glass -->
+  <g filter="url(#softShadow)">
+    <path d="M407 204C407 204 431 513 508 633C542 686 577 708 600 708C623 708 658 686 692 633C769 513 793 204 793 204H407Z"
+          fill="white" stroke="url(#wineGradient)" stroke-width="24" stroke-linejoin="round"/>
+
+    <!-- Wine body -->
+    <path d="M437 392C489 369 526 421 579 398C641 371 696 363 763 397C754 475 731 568 685 635C652 683 621 701 600 701C579 701 548 683 515 635C470 568 447 474 437 392Z"
+          fill="url(#wineGradient)" opacity="0.97"/>
+
+    <!-- Glass highlight -->
+    <path d="M456 252C465 356 484 501 528 585" stroke="#FFF8EF" stroke-width="15" stroke-linecap="round" opacity="0.52"/>
+
+    <!-- Stem and base -->
+    <path d="M600 708V895" stroke="url(#wineGradient)" stroke-width="26" stroke-linecap="round"/>
+    <path d="M480 946C527 909 673 909 720 946" stroke="url(#wineGradient)" stroke-width="26" stroke-linecap="round"/>
+  </g>
+
+  <!-- AI neural network inside the wine -->
+  <g stroke="#F6D98F" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.96">
+    <path d="M522 482L584 540L661 483"/>
+    <path d="M584 540L598 626"/>
+    <path d="M584 540L515 602"/>
+    <path d="M661 483L699 563"/>
+    <path d="M522 482L515 602"/>
+  </g>
+
+  <g fill="#FFF8EF" stroke="#F6D98F" stroke-width="7">
+    <circle cx="522" cy="482" r="18"/>
+    <circle cx="584" cy="540" r="18"/>
+    <circle cx="661" cy="483" r="18"/>
+    <circle cx="598" cy="626" r="18"/>
+    <circle cx="515" cy="602" r="18"/>
+    <circle cx="699" cy="563" r="18"/>
+  </g>
+
+  <!-- Grape cluster detail -->
+  <g fill="#7A1230" stroke="#F6D98F" stroke-width="5">
+    <circle cx="782" cy="705" r="23"/>
+    <circle cx="734" cy="706" r="23"/>
+    <circle cx="759" cy="747" r="23"/>
+    <circle cx="808" cy="747" r="23"/>
+    <circle cx="783" cy="789" r="23"/>
+  </g>
+  <path d="M762 671C774 645 802 637 827 647" stroke="#A77A2E" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- AI sparkles -->
+  <path d="M338 350L359 412L421 433L359 454L338 516L317 454L255 433L317 412L338 350Z" fill="url(#goldGradient)"/>
+  <path d="M859 302L873 342L913 356L873 370L859 410L845 370L805 356L845 342L859 302Z" fill="#D8B66A"/>
+  <path d="M312 770L323 802L355 813L323 824L312 856L301 824L269 813L301 802L312 770Z" fill="#D8B66A" opacity="0.9"/>
+</svg>

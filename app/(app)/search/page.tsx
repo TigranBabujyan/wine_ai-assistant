@@ -2,13 +2,12 @@
 
 import { useEffect, Suspense, useState, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { SearchBar } from '@/components/features/search/SearchBar'
 import { StreamingThought } from '@/components/features/search/StreamingThought'
 import { WineCardSkeleton } from '@/components/features/wine/WineCard'
 import { useWineSearch } from '@/lib/hooks/useWineSearch'
 import { useJournal } from '@/lib/hooks/useJournal'
 import { WinePartial, WineStyle } from '@/types/wine.types'
-import { AlertCircle, Sparkles, Wine, Heart, Star, BookmarkPlus } from 'lucide-react'
+import { AlertCircle, Sparkles, Wine, BookmarkPlus } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 
@@ -55,6 +54,7 @@ function SearchPageInner() {
 
   useEffect(() => {
     if (isRateLimit) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setRateLimitCountdown(30)
       countdownRef.current = setInterval(() => {
         setRateLimitCountdown(prev => {
@@ -68,6 +68,7 @@ function SearchPageInner() {
 
   useEffect(() => {
     if (qParam) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setInputValue(qParam)
       search(qParam)
     }

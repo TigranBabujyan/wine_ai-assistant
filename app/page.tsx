@@ -1,9 +1,10 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/api/supabase-server'
 import Link from 'next/link'
+import Image from 'next/image'
 import { buttonVariants } from '@/components/ui/button-variants'
 import { Badge } from '@/components/ui/badge'
-import { Wine, Search, Camera, BookOpen, Trophy, ArrowRight, Sparkles, Shield, Star, Check } from 'lucide-react'
+import { Search, Camera, BookOpen, Trophy, ArrowRight, Sparkles, Shield, Star, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export default async function LandingPage() {
@@ -15,9 +16,7 @@ export default async function LandingPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 max-w-6xl mx-auto backdrop-blur-sm bg-background/80 border-b border-border/40">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <Wine className="w-4 h-4 text-primary-foreground" />
-          </div>
+          <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
           <span className="font-bold text-lg">Wine AI</span>
         </Link>
         <div className="flex items-center gap-3">
@@ -245,8 +244,8 @@ export default async function LandingPage() {
       <footer className="border-t py-10 px-6">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Wine className="w-4 h-4 text-primary" />
-            <span className="font-medium text-foreground">Wine AI Assistant</span>
+            <Image src="/logo.svg" alt="Wine AI" width={24} height={24} className="rounded-full" />
+            <span className="font-medium text-foreground">Wine AI</span>
           </div>
           <p>© 2025 Wine AI · Built with Next.js, Supabase, and AI</p>
           <div className="flex gap-4">

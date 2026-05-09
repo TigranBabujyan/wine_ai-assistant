@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { Search, Camera, BookOpen, Trophy, Settings, Wine, LayoutDashboard, LogOut } from 'lucide-react'
+import { Search, Camera, BookOpen, Trophy, Settings, LayoutDashboard, LogOut } from 'lucide-react'
 import { createClient } from '@/lib/api/supabase'
 import { useRouter } from 'next/navigation'
 
@@ -37,12 +38,9 @@ export function Sidebar() {
     >
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-        <div className="relative">
-          <div className="absolute inset-0 rounded-full blur-md" style={{ background: 'rgba(139,34,82,0.4)' }} />
-          <Wine className="w-7 h-7 relative z-10" style={{ color: 'var(--wine-400)' }} />
-        </div>
+        <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
         <span className="text-xl font-medium tracking-tight text-gradient" style={{ fontFamily: 'Playfair Display, serif' }}>
-          Sommelier
+          Wine AI
         </span>
       </div>
 

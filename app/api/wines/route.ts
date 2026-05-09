@@ -33,7 +33,7 @@ export async function GET() {
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ wines: data })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     const newAchievements = await checkAndUnlockAchievements(user.id)
 
     return NextResponse.json({ wine, new_achievements: newAchievements })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

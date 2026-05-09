@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 
 // Re-import fresh module each test to reset in-memory state
 // We test the rate limit logic by calling through many times

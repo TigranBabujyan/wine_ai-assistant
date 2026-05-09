@@ -33,7 +33,7 @@ export default function PrivacyPage() {
 
         <section className="space-y-3">
           <h2 className="text-lg font-semibold text-foreground">How AI works</h2>
-          <p>Wine AI uses Groq's inference API to power search and label scanning. Your search queries and label images are sent to Groq for processing. Groq's privacy policy applies to that processing. We do not store your raw queries or images beyond what is shown in your journal.</p>
+          <p>Wine AI uses Groq&apos;s inference API to power search and label scanning. Your search queries and label images are sent to Groq for processing. Groq&apos;s privacy policy applies to that processing. We do not store your raw queries or images beyond what is shown in your journal.</p>
         </section>
 
         <section className="space-y-3">

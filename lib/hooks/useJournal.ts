@@ -17,6 +17,7 @@ export function useJournal() {
     setLoading(false)
   }, [])
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchWines() }, [fetchWines])
 
   const saveWine = useCallback(async (wine: WinePartial) => {
