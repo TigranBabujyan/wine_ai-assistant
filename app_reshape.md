@@ -15,9 +15,9 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 - [x] Redesign settings page — remove API key manager, keep account section only (email, sign out)
 
 ### 2. Image compression before scan upload
-- [ ] Add client-side image resize utility (max 1024px, JPEG 80%) before base64 conversion
-- [ ] Show instant feedback on image selection: "Image received — analyzing label..."
-- [ ] Start loading state on file select, not on button click
+- [x] Add client-side image resize utility (max 1024px, JPEG 80%) before base64 conversion — already implemented in `lib/utils/image-utils.ts`
+- [x] Show instant feedback on image selection: scan starts immediately on file select
+- [x] Start loading state on file select, not on button click — `handleFile` now calls `scan()` automatically
 
 ### 3. Footer + landing page cleanup
 - [x] Remove "A portfolio project." from footer
@@ -98,4 +98,5 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 |------|---------------|
 | 2026-05-09 | Plan created. App is at ~85% — build passes clean, env vars set, not yet deployed. |
 | 2026-05-09 | Phase 1 partial: Groq server-side key wired up, BYOK removed from both API routes. Dashboard setup accordion removed. Settings page simplified to account-only. Footer "portfolio project" text removed. Search query limit lowered to 300 chars with live counter + button guard. Scan "Claude" text updated. Build clean, 11/11 tests pass. |
+| 2026-05-09 | Phase 1 complete: Auto-scan on file select (no "Scan Label" button click needed). Image compression was already implemented. All Phase 1 items done. Build clean. |
 

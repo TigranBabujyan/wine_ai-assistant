@@ -19,7 +19,8 @@ export function LabelScanner() {
   const handleFile = useCallback(async (file: File) => {
     fileRef.current = file
     await selectFile(file)
-  }, [selectFile])
+    scan(file)
+  }, [selectFile, scan])
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault()
