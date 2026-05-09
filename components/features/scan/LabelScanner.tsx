@@ -110,7 +110,7 @@ export function LabelScanner() {
               <Loader2 className="w-8 h-8 text-primary animate-spin" />
             </div>
             <p className="font-medium">Analyzing label...</p>
-            <p className="text-sm text-muted-foreground mt-1">Claude is reading the wine details</p>
+            <p className="text-sm text-muted-foreground mt-1">AI is reading the wine details</p>
           </div>
         </div>
       </div>

@@ -8,11 +8,11 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 ## Phase 1 — Core (3–4 days)
 
 ### 1. Server-side Groq key — remove BYOK entirely
-- [ ] Add `GROQ_API_KEY` to `.env.local` and Vercel env vars
-- [ ] Rewrite `/api/ai/search` route to use server Groq key — remove DB lookup + decrypt flow
-- [ ] Rewrite `/api/ai/scan` route to use server Groq key — remove DB lookup + decrypt flow
-- [ ] Remove "Setup required / Add API key" banner from dashboard (`DashboardClient.tsx`, `hasApiKey` prop)
-- [ ] Redesign settings page — remove API key manager, keep account section only (email, sign out)
+- [x] Add `GROQ_API_KEY` to `.env.local` and Vercel env vars
+- [x] Rewrite `/api/ai/search` route to use server Groq key — remove DB lookup + decrypt flow
+- [x] Rewrite `/api/ai/scan` route to use server Groq key — remove DB lookup + decrypt flow
+- [x] Remove "Setup required / Add API key" banner from dashboard (`DashboardClient.tsx`, `hasApiKey` prop)
+- [x] Redesign settings page — remove API key manager, keep account section only (email, sign out)
 
 ### 2. Image compression before scan upload
 - [ ] Add client-side image resize utility (max 1024px, JPEG 80%) before base64 conversion
@@ -20,15 +20,15 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 - [ ] Start loading state on file select, not on button click
 
 ### 3. Footer + landing page cleanup
-- [ ] Remove "A portfolio project." from footer
-- [ ] Replace footer text with: `© 2025 Wine AI · Built with Next.js and AI`
+- [x] Remove "A portfolio project." from footer
+- [x] Replace footer text with: `© 2025 Wine AI · Built with Next.js and AI`
 - [ ] Add Privacy Policy link and Contact link to footer
 - [ ] Remove all "portfolio project" mentions from README
 
 ### 4. Character limit + search input counter
-- [ ] Lower `SearchRequestSchema` query max from 500 to 300 characters
-- [ ] Add character counter to search input UI (`47/300`)
-- [ ] Disable search button client-side when query exceeds 300 chars or is under 2 chars
+- [x] Lower `SearchRequestSchema` query max from 500 to 300 characters
+- [x] Add character counter to search input UI (`47/300`)
+- [x] Disable search button client-side when query exceeds 300 chars or is under 2 chars
 
 ---
 
@@ -97,4 +97,5 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 | Date | What Was Done |
 |------|---------------|
 | 2026-05-09 | Plan created. App is at ~85% — build passes clean, env vars set, not yet deployed. |
+| 2026-05-09 | Phase 1 partial: Groq server-side key wired up, BYOK removed from both API routes. Dashboard setup accordion removed. Settings page simplified to account-only. Footer "portfolio project" text removed. Search query limit lowered to 300 chars with live counter + button guard. Scan "Claude" text updated. Build clean, 11/11 tests pass. |
 

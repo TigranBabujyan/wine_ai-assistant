@@ -2,8 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Wine, Camera, Trophy, Sparkles, ArrowRight, Key, CheckCircle, ChevronDown } from 'lucide-react'
-import { useState } from 'react'
+import { Wine, Camera, Trophy, Sparkles, ArrowRight } from 'lucide-react'
 import { WineFull } from '@/types/wine.types'
 
 const statIcons = { wine: Wine, gold: Camera, emerald: Trophy }
@@ -19,7 +18,6 @@ interface Props {
   firstName: string
   stats: Stat[]
   recentWines: WineFull[]
-  hasApiKey: boolean
 }
 
 const container = {
@@ -45,9 +43,7 @@ const statColors = {
   emerald: { bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.2)', text: '#10B981', glow: 'rgba(16,185,129,0.12)', line: '#10B981' },
 }
 
-export default function DashboardClient({ firstName, stats, recentWines, hasApiKey }: Props) {
-  const [setupOpen, setSetupOpen] = useState(!hasApiKey)
-
+export default function DashboardClient({ firstName, stats, recentWines }: Props) {
   return (
     <motion.div
       className="space-y-10 max-w-6xl mx-auto"
@@ -226,80 +222,6 @@ export default function DashboardClient({ firstName, stats, recentWines, hasApiK
         </motion.div>
       )}
 
-      {/* AI Setup Guide */}
-      <motion.div variants={item} className="glass-card rounded-2xl overflow-hidden">
-        <button
-          onClick={() => setSetupOpen(v => !v)}
-          className="w-full p-6 flex items-center justify-between hover:bg-white/[0.02] transition-colors"
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center glow-burgundy"
-              style={{ background: 'rgba(139,34,82,0.2)' }}>
-              {hasApiKey
-                ? <CheckCircle className="w-5 h-5" style={{ color: '#10B981' }} />
-                : <Key className="w-5 h-5" style={{ color: 'var(--wine-400)' }} />
-              }
-            </div>
-            <div className="text-left">
-              <h3 className="font-medium text-xl text-white" style={{ fontFamily: 'Playfair Display, serif' }}>
-                {hasApiKey ? 'AI Provider Connected' : 'Connect an AI Provider'}
-              </h3>
-              <p className="text-sm text-white/40 mt-0.5">
-                {hasApiKey ? 'Your AI features are active and ready.' : 'Required for search and label scanning.'}
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            {hasApiKey
-              ? <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }}>Active</span>
-              : <span className="text-xs px-3 py-1 rounded-full font-medium" style={{ background: 'rgba(201,168,76,0.1)', color: '#C9A84C', border: '1px solid rgba(201,168,76,0.2)' }}>Setup needed</span>
-            }
-            <ChevronDown className={`w-5 h-5 text-white/40 transition-transform duration-300 ${setupOpen ? 'rotate-180' : ''}`} />
-          </div>
-        </button>
-
-        {setupOpen && (
-          <div className="px-6 pb-6 pt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-5">
-              {[
-                { name: 'Groq', desc: 'Free & fast. No credit card needed.', color: '#F97316', badge: 'Free', url: 'https://console.groq.com/keys' },
-                { name: 'Anthropic', desc: 'Best quality, powered by Claude.', color: '#A855F7', badge: 'Recommended', url: 'https://console.anthropic.com' },
-                { name: 'OpenAI',    desc: 'Most popular, versatile models.',  color: '#10B981', badge: 'Alternative', url: 'https://platform.openai.com/api-keys' },
-              ].map(p => (
-                <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
-                  className="p-4 rounded-xl transition-colors hover:bg-white/[0.04] group"
-                  style={{ background: 'rgba(255,255,255,0.02)', borderLeft: `2px solid ${p.color}`, border: `1px solid rgba(255,255,255,0.05)`, borderLeftWidth: 2, borderLeftColor: p.color }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium" style={{ color: p.color }}>{p.name}</span>
-                    <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: `${p.color}20`, color: p.color, border: `1px solid ${p.color}30` }}>{p.badge}</span>
-                  </div>
-                  <p className="text-sm text-white/40">{p.desc}</p>
-                </a>
-              ))}
-            </div>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-xl" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.05)' }}>
-              <div className="flex items-center gap-3 text-sm text-white/40 flex-wrap">
-                {['1. Choose provider', '2. Get API key', '3. Paste in Settings'].map((s, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    {i > 0 && <div className="w-8 h-px bg-white/10 hidden md:block" />}
-                    <span className="flex w-6 h-6 items-center justify-center rounded-full text-xs font-medium"
-                      style={i === 0 ? { background: 'rgba(139,34,82,0.2)', border: '1px solid rgba(139,34,82,0.3)', color: 'var(--wine-400)' } : { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)' }}>
-                      {i + 1}
-                    </span>
-                    <span className={i === 0 ? 'text-white' : ''}>{s.replace(/^\d\. /, '')}</span>
-                  </div>
-                ))}
-              </div>
-              <Link href="/settings">
-                <button className="px-6 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#F5F0E8' }}>
-                  Go to Settings →
-                </button>
-              </Link>
-            </div>
-          </div>
-        )}
-      </motion.div>
     </motion.div>
   )
 }

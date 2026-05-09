@@ -1,47 +1,30 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ApiKeyManager } from '@/components/features/settings/ApiKeyManager'
-import { Settings } from 'lucide-react'
+import { Settings, LogOut, Cpu } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { AIProvider, ApiKeyRecord } from '@/types/ai.types'
 import { createClient } from '@/lib/api/supabase'
+import { useRouter } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
 
 export default function SettingsPage() {
   const [user, setUser] = useState<User | null>(null)
-  const [keys, setKeys] = useState<Partial<Record<AIProvider, ApiKeyRecord>>>({})
-  const [selectedProvider, setSelectedProvider] = useState<AIProvider>('anthropic')
   const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
-  const fetchData = async () => {
+  useEffect(() => {
     const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    setUser(user)
-    if (!user) { setLoading(false); return }
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user)
+      setLoading(false)
+    })
+  }, [])
 
-    const [keysRes, prefsRes] = await Promise.all([
-      supabase
-        .from('api_keys')
-        .select('id, key_hint, model_pref, is_active, created_at, user_id, provider')
-        .eq('user_id', user.id),
-      supabase
-        .from('user_preferences')
-        .select('selected_provider')
-        .eq('user_id', user.id)
-        .single(),
-    ])
-
-    const keyMap: Partial<Record<AIProvider, ApiKeyRecord>> = {}
-    for (const k of keysRes.data ?? []) {
-      keyMap[k.provider as AIProvider] = k as ApiKeyRecord
-    }
-    setKeys(keyMap)
-    setSelectedProvider((prefsRes.data?.selected_provider as AIProvider) ?? 'anthropic')
-    setLoading(false)
+  const handleSignOut = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push('/')
   }
-
-  useEffect(() => { fetchData() }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) return null
 
@@ -52,7 +35,7 @@ export default function SettingsPage() {
           <Settings className="w-6 h-6 text-primary" />
           Settings
         </h1>
-        <p className="text-muted-foreground mt-1">Manage your AI providers and account.</p>
+        <p className="text-muted-foreground mt-1">Manage your account.</p>
       </div>
 
       {/* Account */}
@@ -61,27 +44,36 @@ export default function SettingsPage() {
           <CardTitle className="text-base">Account</CardTitle>
           <CardDescription>Your account information</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">Signed in as</p>
-          <p className="font-medium">{user?.email}</p>
+        <CardContent className="space-y-4">
+          <div>
+            <p className="text-sm text-muted-foreground">Signed in as</p>
+            <p className="font-medium">{user?.email}</p>
+          </div>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-2 text-sm text-destructive hover:text-destructive/80 transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            Sign out
+          </button>
         </CardContent>
       </Card>
 
-      {/* AI Providers */}
+      {/* AI */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">AI Providers</CardTitle>
+          <CardTitle className="text-base flex items-center gap-2">
+            <Cpu className="w-4 h-4" /> AI
+          </CardTitle>
           <CardDescription>
-            Connect your own API keys. Keys are encrypted at rest and never exposed in responses.
-            You can add multiple providers and switch between them anytime.
+            Search and label scanning are powered by Llama 3.3 70B via Groq — fast, free, and running on every request automatically.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ApiKeyManager
-            keys={keys}
-            selectedProvider={selectedProvider}
-            onSaved={fetchData}
-          />
+          <div className="flex items-center gap-2 text-sm">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-muted-foreground">AI active — no setup required</span>
+          </div>
         </CardContent>
       </Card>
     </div>

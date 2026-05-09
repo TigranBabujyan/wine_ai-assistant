@@ -248,7 +248,7 @@ export default async function LandingPage() {
             <Wine className="w-4 h-4 text-primary" />
             <span className="font-medium text-foreground">Wine AI Assistant</span>
           </div>
-          <p>Built with Next.js, Supabase, and AI. A portfolio project.</p>
+          <p>© 2025 Wine AI · Built with Next.js, Supabase, and AI</p>
           <div className="flex gap-4">
             <Link href="/auth" className="hover:text-foreground transition-colors">Sign In</Link>
             <Link href="/auth" className="hover:text-foreground transition-colors">Sign Up</Link>
