@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Loader2, AlertCircle } from 'lucide-react'
+import { Loader2, AlertCircle, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -16,6 +16,7 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
+  const [showForgot, setShowForgot] = useState(false)
 
   const handleSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -43,8 +44,6 @@ export default function AuthPage() {
     const form = new FormData(e.currentTarget)
     const email = form.get('email') as string
 
-    // Check if email is already registered before calling signUp
-    // (Supabase silently succeeds on duplicate emails when confirmation is on)
     const check = await fetch('/api/auth/check-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -74,21 +73,88 @@ export default function AuthPage() {
     }
   }
 
+  const handleForgotPassword = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setError(null)
+    setLoading(true)
+    const form = new FormData(e.currentTarget)
+    const email = form.get('email') as string
+    const supabase = createClient()
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset`,
+    })
+    if (error) {
+      setError(error.message)
+    } else {
+      setMessage('If an account exists for that email, a reset link has been sent.')
+    }
+    setLoading(false)
+  }
+
+  const openForgot = () => {
+    setError(null)
+    setMessage(null)
+    setShowForgot(true)
+  }
+
+  const closeForgot = () => {
+    setError(null)
+    setMessage(null)
+    setShowForgot(false)
+  }
+
   return (
     <div className="w-full max-w-sm space-y-6">
-      {/* Logo — mobile only (desktop shows in layout panel) */}
+      {/* Logo — mobile only */}
       <Link href="/" className="flex items-center gap-2.5 justify-center lg:hidden">
         <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
         <span className="font-bold text-xl">Wine AI</span>
       </Link>
 
       <div>
-        <h2 className="text-2xl font-bold mb-1">Welcome back</h2>
-        <p className="text-sm text-muted-foreground">Sign in to your account or create a new one.</p>
+        <h2 className="text-2xl font-bold mb-1">
+          {showForgot ? 'Reset your password' : 'Welcome back'}
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          {showForgot
+            ? 'Enter your email and we\'ll send you a reset link.'
+            : 'Sign in to your account or create a new one.'}
+        </p>
       </div>
 
-        {/* Card */}
-        <div className="bg-card border rounded-2xl shadow-sm p-6">
+      <div className="bg-card border rounded-2xl shadow-sm p-6">
+        {showForgot ? (
+          /* Forgot password form */
+          <div className="space-y-4">
+            {!message ? (
+              <form onSubmit={handleForgotPassword} className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="forgot-email">Email</Label>
+                  <Input id="forgot-email" name="email" type="email" placeholder="you@example.com" required />
+                </div>
+                {error && (
+                  <div className="flex items-center gap-2 text-destructive text-sm">
+                    <AlertCircle className="w-4 h-4 shrink-0" />{error}
+                  </div>
+                )}
+                <Button type="submit" disabled={loading} className="w-full">
+                  {loading ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" />Sending...</> : 'Send Reset Link'}
+                </Button>
+              </form>
+            ) : (
+              <div className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg p-3">
+                {message}
+              </div>
+            )}
+            <button
+              onClick={closeForgot}
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" /> Back to sign in
+            </button>
+          </div>
+        ) : (
+          /* Sign in / Sign up tabs */
           <Tabs defaultValue="signin">
             <TabsList className="w-full mb-5">
               <TabsTrigger value="signin" className="flex-1">Sign In</TabsTrigger>
@@ -103,7 +169,16 @@ export default function AuthPage() {
                   <Input id="signin-email" name="email" type="email" placeholder="you@example.com" required />
                 </div>
                 <div className="space-y-1.5">
-                  <Label htmlFor="signin-password">Password</Label>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="signin-password">Password</Label>
+                    <button
+                      type="button"
+                      onClick={openForgot}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Forgot password?
+                    </button>
+                  </div>
                   <Input id="signin-password" name="password" type="password" placeholder="••••••••" required />
                 </div>
                 {error && (
@@ -148,7 +223,8 @@ export default function AuthPage() {
               </form>
             </TabsContent>
           </Tabs>
-        </div>
+        )}
+      </div>
 
       <p className="text-center text-xs text-muted-foreground">
         By signing up you agree to our terms. Your data is stored securely.
