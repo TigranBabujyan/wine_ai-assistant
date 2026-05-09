@@ -31,6 +31,13 @@ export const metadata: Metadata = {
     images: ['/logo.svg'],
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32 16x16', type: 'image/x-icon' },
+    ],
+    apple: '/apple-icon.png',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
