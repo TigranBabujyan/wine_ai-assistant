@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const geistSans = Geist({
@@ -13,15 +14,30 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Wine AI Assistant — Discover, Scan & Journal Your Wines',
-  description: 'AI-powered wine discovery, label scanning, and personal wine journal. Find the perfect wine with natural language search.',
-  keywords: ['wine', 'AI', 'sommelier', 'wine journal', 'wine scanner'],
+  title: 'Wine AI — Your Personal AI Sommelier',
+  description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal. Powered by AI.',
+  keywords: ['wine', 'AI sommelier', 'wine scanner', 'wine journal', 'wine discovery'],
+  openGraph: {
+    title: 'Wine AI — Your Personal AI Sommelier',
+    description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal.',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Wine AI — Your Personal AI Sommelier',
+    description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal.',
+  },
+  robots: { index: true, follow: true },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="h-full bg-background text-foreground">{children}</body>
+      <body className="h-full bg-background text-foreground">
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }

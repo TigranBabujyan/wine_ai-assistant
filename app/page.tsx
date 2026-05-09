@@ -250,6 +250,7 @@ export default async function LandingPage() {
           </div>
           <p>© 2025 Wine AI · Built with Next.js, Supabase, and AI</p>
           <div className="flex gap-4">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
             <Link href="/auth" className="hover:text-foreground transition-colors">Sign In</Link>
             <Link href="/auth" className="hover:text-foreground transition-colors">Sign Up</Link>
           </div>
