@@ -14,19 +14,10 @@
       <stop offset="1" stop-color="#A77A2E"/>
     </linearGradient>
 
-    <radialGradient id="backgroundGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 590) rotate(90) scale(500)">
-      <stop offset="0" stop-color="#9B1B42" stop-opacity="0.20"/>
-      <stop offset="1" stop-color="#9B1B42" stop-opacity="0"/>
-    </radialGradient>
-
     <filter id="softShadow" x="190" y="120" width="820" height="940" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#180810" flood-opacity="0.18"/>
     </filter>
   </defs>
-
-  <!-- Premium warm background -->
-  <rect width="1200" height="1200" rx="280" fill="#FFF8EF"/>
-  <circle cx="600" cy="600" r="492" fill="url(#backgroundGlow)"/>
 
   <!-- Elegant badge frame -->
   <circle cx="600" cy="600" r="430" stroke="url(#goldGradient)" stroke-width="18"/>
@@ -42,7 +33,7 @@
           fill="url(#wineGradient)" opacity="0.97"/>
 
     <!-- Glass highlight -->
-    <path d="M456 252C465 356 484 501 528 585" stroke="#FFF8EF" stroke-width="15" stroke-linecap="round" opacity="0.52"/>
+    <path d="M456 252C465 356 484 501 528 585" stroke="white" stroke-width="15" stroke-linecap="round" opacity="0.52"/>
 
     <!-- Stem and base -->
     <path d="M600 708V895" stroke="url(#wineGradient)" stroke-width="26" stroke-linecap="round"/>
@@ -58,7 +49,7 @@
     <path d="M522 482L515 602"/>
   </g>
 
-  <g fill="#FFF8EF" stroke="#F6D98F" stroke-width="7">
+  <g fill="white" stroke="#F6D98F" stroke-width="7">
     <circle cx="522" cy="482" r="18"/>
     <circle cx="584" cy="540" r="18"/>
     <circle cx="661" cy="483" r="18"/>
