@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button-variants'
 import { Wine } from 'lucide-react'
 
 export default function WineNotFound() {
@@ -12,8 +12,8 @@ export default function WineNotFound() {
       <p className="text-muted-foreground mb-8 max-w-sm">
         This wine doesn&apos;t exist in your journal or may have been deleted.
       </p>
-      <Link href="/journal">
-        <Button>Back to Journal</Button>
+      <Link href="/journal" className={buttonVariants()}>
+        Back to Journal
       </Link>
     </div>
   )
