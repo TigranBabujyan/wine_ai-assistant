@@ -1,40 +1,25 @@
-# Wine AI Assistant
+# Wine AI
 
-**AI sommelier prototype for wine discovery, label scanning, and personal tasting notes.**
+**Your personal AI sommelier — discover wines, scan labels, build your collection.**
 
-Wine AI Assistant is a portfolio project exploring how AI can support wine discovery through natural language search, label analysis, and a personal wine journal.
+Wine AI lets you explore wine through natural language search, instant label scanning, and a personal wine journal. Powered by Groq's fast inference models.
 
 ![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=flat-square&logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)
-![AI](https://img.shields.io/badge/AI-Anthropic_%7C_OpenAI_%7C_Groq-D97706?style=flat-square)
+![Groq](https://img.shields.io/badge/AI-Groq-D97706?style=flat-square)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-
----
-
-## Project Status
-
-This project is in active development. The README is written to describe the intended product direction and the technical architecture being explored.
-
-Screenshots and a public deployment link will be added when the UI is ready for external review.
-
----
-
-## What It Is
-
-Wine AI Assistant lets users discover wines through natural language queries, scan bottle labels, and keep a personal wine journal. The project is designed to demonstrate production-minded patterns in AI-integrated frontend development: server-side API handling, Supabase-backed data flows, structured AI output validation, and a composable React component architecture.
 
 ---
 
 ## Features
 
-- **Natural language wine search** — search for wines by taste, region, food pairing, budget, or occasion.
-- **Wine label scanner** — extract useful wine information from bottle labels.
-- **Personal wine journal** — save wines, notes, ratings, and pairing ideas.
-- **Structured flavor profiles** — acidity, tannin, body, sweetness, and alcohol data visualized in the UI.
-- **Multi-provider AI direction** — designed around Anthropic, OpenAI, and Groq provider options.
-- **Supabase-backed data model** — auth, database, and user-owned records.
-- **Zod validation** — validates structured AI responses before they reach the client UI.
+- **Natural language search** — ask for "bold reds under €20" or "something like Rioja" and get expert recommendations with full tasting profiles.
+- **Label scanner** — point your camera at any wine label. AI Vision extracts name, region, vintage, tasting notes, and food pairings instantly.
+- **Personal journal** — save wines, add notes, and track everything you've tasted.
+- **Achievements** — earn badges as you explore: first pour, label detective, world traveler, and more.
+- **Rate limiting** — per-user request throttling with countdown UI on Groq 429 responses.
+- **Secure** — API keys encrypted server-side, Row Level Security on all tables, keys never appear in HTTP responses.
 
 ---
 
@@ -44,28 +29,25 @@ Wine AI Assistant lets users discover wines through natural language queries, sc
 |---|---|
 | Framework | Next.js 16, App Router |
 | Language | TypeScript |
-| Styling | Tailwind CSS, shadcn/ui-style components |
-| Database/Auth | Supabase |
+| Styling | Tailwind CSS |
+| Database / Auth | Supabase (PostgreSQL + RLS) |
 | State | Zustand |
-| AI Providers | Anthropic, OpenAI, Groq |
+| AI — Search | Groq · Llama 3.3 70B (SSE streaming) |
+| AI — Scan | Groq · Llama 4 Scout Vision |
 | Validation | Zod |
-| Charts | Recharts |
+| Analytics | Vercel Analytics |
+| Tests | Vitest |
 
 ---
 
-## Architecture Direction
+## Architecture
 
-The project is structured around a server-side AI boundary. Client components send user intent to Next.js API routes, API routes call the selected AI provider, and responses are validated before being displayed in the UI.
+All AI calls are server-side. The client never touches an API key.
 
-```mermaid
-flowchart LR
-    User[User] --> UI[React / Next.js UI]
-    UI --> API[Next.js API Routes]
-    API --> Auth[Supabase Auth]
-    API --> AI[AI Provider]
-    AI --> Validation[Zod Validation]
-    Validation --> UI
-    UI --> DB[Supabase Database]
+```
+User → Next.js UI → API Route → Groq → Zod validation → UI
+                         ↕
+                    Supabase (auth + DB)
 ```
 
 ---
@@ -75,9 +57,8 @@ flowchart LR
 ### Prerequisites
 
 - Node.js 20+
-- npm
 - Supabase project
-- AI provider API key, depending on the selected provider
+- Groq API key (free at [console.groq.com](https://console.groq.com))
 
 ### Installation
 
@@ -89,25 +70,23 @@ npm install
 
 ### Environment Variables
 
-Create a local environment file:
-
-```bash
-cp .env.example .env.local
-```
-
-Typical variables:
-
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-DB_ENCRYPTION_SECRET=your_encryption_secret
-ANTHROPIC_API_KEY=
+GROQ_API_KEY=your_groq_api_key
 ```
 
-`ANTHROPIC_API_KEY` is optional and only used for the unauthenticated landing-page demo if you enable that flow.
+### Database
 
-Never commit real API keys or secrets.
+Run the four migration files in order in your Supabase SQL editor:
+
+```
+supabase/migrations/001_initial_schema.sql
+supabase/migrations/002_rls_policies.sql
+supabase/migrations/003_api_key_functions.sql
+supabase/migrations/004_provider_selection.sql
+```
 
 ### Run locally
 
@@ -117,28 +96,11 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
----
+### Tests
 
-## Portfolio Context
-
-This project is intended to demonstrate:
-
-- React and Next.js application architecture;
-- AI API integration in a frontend product;
-- TypeScript-first development;
-- Supabase auth and database usage;
-- structured AI response handling with Zod;
-- product thinking around a real domain: wine discovery and tasting notes.
-
----
-
-## Roadmap
-
-- Add public deployment link.
-- Add real screenshots and demo media.
-- Improve onboarding and empty states.
-- Add automated tests for validation and key user flows.
-- Expand wine recommendation and food pairing flows.
+```bash
+npm test
+```
 
 ---
 
