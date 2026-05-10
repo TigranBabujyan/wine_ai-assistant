@@ -22,8 +22,8 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 ### 3. Footer + landing page cleanup
 - [x] Remove "A portfolio project." from footer
 - [x] Replace footer text with: `© 2025 Wine AI · Built with Next.js and AI`
-- [ ] Add Privacy Policy link and Contact link to footer
-- [ ] Remove all "portfolio project" mentions from README
+- [x] Add Privacy Policy link and Contact link to footer
+- [x] Remove all "portfolio project" mentions from README
 
 ### 4. Character limit + search input counter
 - [x] Lower `SearchRequestSchema` query max from 500 to 300 characters
@@ -80,10 +80,10 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 - [x] `<Analytics />` added to root layout
 
 ### 13. Final cleanup + deploy
-- [ ] Run Supabase migrations in production dashboard (4 SQL files in order)
-- [ ] Add `GROQ_API_KEY` to Vercel environment variables
-- [ ] Deploy to Vercel, verify all routes work on live URL
-- [ ] Run end-to-end smoke test: sign up → search → scan → save to journal → check achievements
+- [x] Run Supabase migrations in production dashboard (4 SQL files in order)
+- [x] Add `GROQ_API_KEY` to Vercel environment variables
+- [x] Deploy to Vercel, verify all routes work on live URL
+- [x] Run end-to-end smoke test: sign up → search → scan → save to journal → check achievements
 
 ---
 
@@ -105,4 +105,5 @@ Stack: Next.js + Supabase + Groq (free tier) + LemonSqueezy (payments)
 | 2026-05-09 | Phase 1 complete: Auto-scan on file select (no "Scan Label" button click needed). Image compression was already implemented. All Phase 1 items done. Build clean. |
 | 2026-05-09 | Phase 2 complete: TopLoadingBar added to AppShell (wine+gold gradient, fires on search/scan). 429 countdown in search UI. Achievements page and AchievementBadge restyled to dark glass aesthetic. All other Phase 2 items were already implemented. Build clean, 11/11 tests pass. |
 | 2026-05-09 | Phase 3 complete: 14 new tests (buildDoneEvent, checkRateLimit, 300-char schema limit). vitest.config.ts created with @/ alias. Privacy page at /privacy. Full OG/Twitter SEO metadata. Vercel Analytics wired. Privacy link in footer. Build clean, 25/25 tests pass. |
+| 2026-05-09 | Deployed to Vercel. CI lint errors fixed (unescaped entities, unused imports, <img> tags, require()). Favicon + apple-icon generated from logo SVG. Supabase migrations ran in production. Smoke test passed: search, scan, save, achievements all working on live URL. |
 

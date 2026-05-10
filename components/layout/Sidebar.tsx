@@ -38,9 +38,9 @@ export function Sidebar() {
     >
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-5" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-        <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
+        <Image src="/logo.svg" alt="CorkWise" width={36} height={36} className="rounded-full" />
         <span className="text-xl font-medium tracking-tight text-gradient" style={{ fontFamily: 'Playfair Display, serif' }}>
-          Wine AI
+          CorkWise
         </span>
       </div>
 

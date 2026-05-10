@@ -1,8 +1,8 @@
-# Wine AI
+# CorkWise
 
 **Your personal AI sommelier — discover wines, scan labels, build your collection.**
 
-Wine AI lets you explore wine through natural language search, instant label scanning, and a personal wine journal. Powered by Groq's fast inference models.
+CorkWise lets you explore wine through natural language search, instant label scanning, and a personal wine journal. Powered by Groq's fast inference models.
 
 ![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=flat-square&logo=next.js&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript_5-3178C6?style=flat-square&logo=typescript&logoColor=white)

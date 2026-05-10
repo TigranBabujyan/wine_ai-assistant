@@ -16,8 +16,8 @@ export default async function LandingPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 max-w-6xl mx-auto backdrop-blur-sm bg-background/80 border-b border-border/40">
         <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
-          <span className="font-bold text-lg">Wine AI</span>
+          <Image src="/logo.svg" alt="CorkWise" width={36} height={36} className="rounded-full" />
+          <span className="font-bold text-lg">CorkWise</span>
         </Link>
         <div className="flex items-center gap-3">
           <Link href="/auth" className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
@@ -244,13 +244,13 @@ export default async function LandingPage() {
       <footer className="border-t py-10 px-6">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="Wine AI" width={24} height={24} className="rounded-full" />
-            <span className="font-medium text-foreground">Wine AI</span>
+            <Image src="/logo.svg" alt="CorkWise" width={24} height={24} className="rounded-full" />
+            <span className="font-medium text-foreground">CorkWise</span>
           </div>
-          <p>© 2025 Wine AI · Built with Next.js, Supabase, and AI</p>
+          <p>© 2025 CorkWise · Built with Next.js, Supabase, and AI</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
-            <a href="mailto:contact@wineai.app" className="hover:text-foreground transition-colors">Contact</a>
+            <a href="mailto:contact@corkwise.app" className="hover:text-foreground transition-colors">Contact</a>
             <Link href="/auth" className="hover:text-foreground transition-colors">Sign In</Link>
           </div>
         </div>

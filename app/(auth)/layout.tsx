@@ -7,8 +7,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* Left: visual panel (desktop only) */}
       <div className="hidden lg:flex flex-col justify-between bg-primary p-12">
         <div className="flex items-center gap-2.5">
-          <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
-          <span className="font-bold text-xl text-primary-foreground">Wine AI</span>
+          <Image src="/logo.svg" alt="CorkWise" width={36} height={36} className="rounded-full" />
+          <span className="font-bold text-xl text-primary-foreground">CorkWise</span>
         </div>
 
         <div className="space-y-8">
@@ -38,7 +38,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <p className="text-primary-foreground/40 text-xs">
-          © 2025 Wine AI · Built with Next.js and AI
+          © 2025 CorkWise · Built with Next.js and AI
         </p>
       </div>
 

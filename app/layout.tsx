@@ -14,19 +14,19 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Wine AI — Your Personal AI Sommelier',
+  title: 'CorkWise — Your Personal AI Sommelier',
   description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal. Powered by AI.',
   keywords: ['wine', 'AI sommelier', 'wine scanner', 'wine journal', 'wine discovery'],
   openGraph: {
-    title: 'Wine AI — Your Personal AI Sommelier',
+    title: 'CorkWise — Your Personal AI Sommelier',
     description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal.',
     type: 'website',
     locale: 'en_US',
-    images: [{ url: '/logo.svg', width: 1200, height: 1200, alt: 'Wine AI Logo' }],
+    images: [{ url: '/logo.svg', width: 1200, height: 1200, alt: 'CorkWise Logo' }],
   },
   twitter: {
     card: 'summary',
-    title: 'Wine AI — Your Personal AI Sommelier',
+    title: 'CorkWise — Your Personal AI Sommelier',
     description: 'Discover wines with natural language, scan labels instantly, and build your personal wine journal.',
     images: ['/logo.svg'],
   },

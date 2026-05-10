@@ -107,8 +107,8 @@ export default function AuthPage() {
     <div className="w-full max-w-sm space-y-6">
       {/* Logo — mobile only */}
       <Link href="/" className="flex items-center gap-2.5 justify-center lg:hidden">
-        <Image src="/logo.svg" alt="Wine AI" width={36} height={36} className="rounded-full" />
-        <span className="font-bold text-xl">Wine AI</span>
+        <Image src="/logo.svg" alt="CorkWise" width={36} height={36} className="rounded-full" />
+        <span className="font-bold text-xl">CorkWise</span>
       </Link>
 
       <div>

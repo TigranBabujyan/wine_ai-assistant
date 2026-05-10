@@ -3,8 +3,8 @@ import { Wine } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — Wine AI',
-  description: 'Privacy policy for Wine AI Assistant.',
+  title: 'Privacy Policy — CorkWise',
+  description: 'Privacy policy for CorkWise Assistant.',
 }
 
 export default function PrivacyPage() {
@@ -15,7 +15,7 @@ export default function PrivacyPage() {
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
             <Wine className="w-4 h-4 text-primary-foreground" />
           </div>
-          <span className="font-bold text-lg">Wine AI</span>
+          <span className="font-bold text-lg">CorkWise</span>
         </Link>
       </nav>
 
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
 
         <section className="space-y-3">
           <h2 className="text-lg font-semibold text-foreground">How AI works</h2>
-          <p>Wine AI uses Groq&apos;s inference API to power search and label scanning. Your search queries and label images are sent to Groq for processing. Groq&apos;s privacy policy applies to that processing. We do not store your raw queries or images beyond what is shown in your journal.</p>
+          <p>CorkWise uses Groq&apos;s inference API to power search and label scanning. Your search queries and label images are sent to Groq for processing. Groq&apos;s privacy policy applies to that processing. We do not store your raw queries or images beyond what is shown in your journal.</p>
         </section>
 
         <section className="space-y-3">
@@ -53,11 +53,11 @@ export default function PrivacyPage() {
 
         <section className="space-y-3">
           <h2 className="text-lg font-semibold text-foreground">Contact</h2>
-          <p>Questions about this policy? Email us at <span className="text-foreground font-medium">hello@wineai.app</span></p>
+          <p>Questions about this policy? Email us at <span className="text-foreground font-medium">hello@corkwise.app</span></p>
         </section>
 
         <div className="pt-8 border-t border-border/40">
-          <Link href="/" className="text-primary hover:underline">← Back to Wine AI</Link>
+          <Link href="/" className="text-primary hover:underline">← Back to CorkWise</Link>
         </div>
       </main>
     </div>
